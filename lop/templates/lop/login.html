@@ -1,0 +1,35 @@
+{% extends "lop/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<h1>login.html</h1>
+
+{% if message %}
+<div>{{ message }}</div>
+{% endif %}
+
+<form action="{% url 'login' %}" method="post">
+
+    {% csrf_token %}
+
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+    </div>
+
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">    
+    </div>
+
+    <input type="submit" value="Login">
+</form>
+
+<p>Don't have an account? <a href="{% url 'register'%}">Register</a></p>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'lop/login.js' %}"></script>
+{% endblock %}
