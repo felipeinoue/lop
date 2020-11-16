@@ -77,3 +77,35 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "lop/register.html")
+
+
+########### APIs ###########
+
+
+def api_lops(request):
+
+    # Check request
+    if request.method == "POST":
+
+        # start variables
+        data = json.loads(request.body)
+        project_name = data.get('project')
+
+        # check if project already exists
+        try:
+            project = Project.objects.get(project=project_name)
+            return JsonResponse({"error": "Project name is alread used."}, status=400)
+        except:
+            pass
+
+        # attempt to create new project
+        try:
+            project = Project(project=project_name)
+            project.save()
+            return JsonResponse({"message": "Project succesfully created."}, status=201)
+        except:
+            return JsonResponse({"error": "There was an error creating your project."}, status=400)
+
+    # Method invalid
+    else:
+        return JsonResponse({"error": "Invalid method."}, status=400)

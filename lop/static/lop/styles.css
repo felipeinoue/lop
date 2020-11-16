@@ -1,0 +1,554 @@
+.font_selected {
+  color: #2699FB;
+}
+
+.font_border {
+  color: #bce0fd;
+}
+
+.font_background {
+  color: #f1f9ff;
+}
+
+.font_headline {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.font_title {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.font_subheader {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.font_largebody {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.font_body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.font_secondarybody {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.font_placeholder {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.font_button {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: bold;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin: 0 0 240px;
+}
+
+.nav {
+  background-color: #2699FB;
+}
+
+.f_container {
+  background-color: #f1f9ff;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #2699FB;
+}
+
+.topnav a {
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+
+.topnav .left {
+  float: left;
+}
+
+.topnav .right {
+  float: right;
+}
+
+footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 180px;
+  background-color: #2699FB;
+  color: white;
+  overflow: hidden;
+  padding: 0px 100px;
+}
+
+.footer_content {
+  position: relative;
+}
+
+.footer_left {
+  margin-top: 65px;
+  width: 33.33333%;
+  float: left;
+  text-align: left;
+}
+
+.footer_middle {
+  margin-top: 80px;
+  width: 33.33333%;
+  float: left;
+  text-align: center;
+}
+
+.footer_right {
+  margin-top: 80px;
+  width: 33.33333%;
+  float: left;
+  text-align: right;
+}
+
+.footer_right img {
+  margin-left: 30px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.profile {
+  max-width: 600px;
+}
+
+.profile_panel {
+  width: 360px;
+  border: solid 2px;
+  border-color: #bce0fd;
+  background-color: #f1f9ff;
+  padding: 30px;
+  margin: 70px auto;
+  border-radius: 5px;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.profile_panel .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+
+.profile_panel .close:hover {
+  color: #2699FB;
+}
+
+.profile_text_div {
+  margin: auto;
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.profile_input_div {
+  margin: auto;
+  margin-top: 20px;
+  width: 250px;
+}
+
+.profile_input {
+  background-color: #f1f9ff;
+  border: 2px solid #bce0fd;
+  border-radius: 10px;
+  height: 50px;
+  width: 100%;
+  padding-left: 15px;
+}
+
+.profile_input:focus {
+  outline-width: 0;
+}
+
+.input_btn {
+  background-color: #f1f9ff;
+  border: 2px solid #bce0fd;
+  border-radius: 4px;
+  height: 40px;
+  width: 120px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: bold;
+  color: #2699FB;
+}
+
+.input_btn:hover {
+  background-color: #2699FB;
+  color: white;
+  border-color: #2699FB;
+}
+
+.input_btn:focus {
+  background-color: #2699FB;
+  color: white;
+  border-color: #2699FB;
+  outline-width: 0;
+}
+
+.start_screen_level {
+  display: block;
+  margin-top: 200px;
+  color: #2699FB;
+  text-align: center;
+}
+
+.start_screen_level .buttons {
+  margin-top: 60px;
+}
+
+.start_screen_level .help {
+  margin-top: 60px;
+}
+
+.start_screen_level .help_img {
+  margin-top: 60px;
+  overflow: auto;
+}
+
+.help_btn {
+  display: none;
+  background-color: #f1f9ff;
+  border: 2px solid #bce0fd;
+  border-radius: 20px;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: bold;
+  color: #2699FB;
+}
+
+.help_btn:hover {
+  background-color: #2699FB;
+  color: white;
+  border-color: #2699FB;
+}
+
+.help_btn:focus {
+  outline-width: 0;
+}
+
+.game_active {
+  display: none;
+  color: #2699FB;
+  margin-top: 100px;
+  text-align: center;
+}
+
+.game_active .title {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: underline;
+}
+
+.game_active .numbers {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 100px;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.game_active .buttons {
+  margin-top: 60px;
+}
+
+.game_active .log {
+  height: 200px;
+  margin-top: 60px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.col3 {
+  display: block;
+  margin-top: 100px;
+  margin-bottom: 280px;
+}
+.col3 .block {
+  display: inline-block;
+  margin: 0px 5px 0px 5px;
+  width: 45px;
+  height: 15px;
+  border: solid 2px;
+  border-radius: 4px;
+}
+.col3 .selected {
+  background-color: #2699FB;
+  border-color: #2699FB;
+}
+.col3 .not_selected {
+  background-color: #f1f9ff;
+  border-color: #bce0fd;
+}
+.col3 .first {
+  background-color: #FBAD26;
+  border-color: #FBAD26;
+}
+
+.register_form {
+  width: 360px;
+  margin: 60px auto;
+  color: #2699FB;
+}
+
+.register_form .title {
+  text-align: center;
+}
+
+.register_form .form {
+  margin-top: 60px;
+}
+
+.register_form .field {
+  margin-top: 20px;
+}
+
+.register_form .clearfix {
+  overflow: auto;
+}
+
+.clearfix .input_btn {
+  margin-left: 20px;
+}
+
+.register_form .input {
+  background-color: #f1f9ff;
+  border: 2px solid #bce0fd;
+  border-radius: 10px;
+  height: 50px;
+  width: 100%;
+  padding-left: 15px;
+  color: #2699FB;
+}
+
+.register_form .input:focus {
+  outline-width: 0;
+}
+
+.register_form .input_btn {
+  float: right;
+}
+
+.profile {
+  width: 98%;
+  margin: auto;
+  color: #2699FB;
+}
+
+.profile .title {
+  width: 360px;
+  margin: 60px auto;
+  color: #2699FB;
+  text-align: center;
+}
+
+.personal_data .title {
+  color: #2699FB;
+  margin: 0px;
+  text-align: left;
+}
+
+.personal_data .photo {
+  width: 100%;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.photo .upload {
+  margin-top: 20px;
+}
+
+.personal_data .form {
+  width: 100%;
+  margin-top: 60px;
+}
+
+.personal_data .field {
+  margin-top: 20px;
+}
+
+.personal_data .clearfix {
+  overflow: auto;
+}
+
+.personal_data .input {
+  background-color: #f1f9ff;
+  border: 2px solid #bce0fd;
+  border-radius: 10px;
+  height: 50px;
+  width: 100%;
+  padding-left: 15px;
+  color: #2699FB;
+}
+
+.personal_data .input:focus {
+  outline-width: 0;
+}
+
+.personal_data .input_btn {
+  float: right;
+}
+
+.highest {
+  width: 100%;
+  margin: 0px;
+}
+
+.highest .title {
+  width: 100%;
+  text-align: left;
+  margin: 0px;
+}
+
+.highest .buttons {
+  max-width: 600px;
+  margin: 0px auto;
+  text-align: center;
+}
+
+.highest .input_btn {
+  margin: 10px;
+}
+
+.highest .panel {
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: left;
+}
+
+.highscores_title {
+  width: 400px;
+  margin: 60px auto;
+  text-align: center;
+  color: #2699FB;
+}
+
+.highscores_authmsg {
+  color: red;
+  text-align: center;
+}
+
+.highscores_panel {
+  max-width: 1300px;
+  margin: 20px auto 180px;
+  text-align: center;
+}
+
+.rank_div {
+  display: inline-block;
+  vertical-align: top;
+  margin: 10px;
+}
+
+.rank_list {
+  color: #2699FB;
+  width: 280px;
+  border: solid 2px;
+  border-color: #bce0fd;
+  vertical-align: middle;
+}
+
+.rank_title {
+  background-color: white;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+}
+
+.rank_positions {
+  background-color: #f1f9ff;
+  width: 100%;
+  height: 50px;
+  border-top: 1px solid #BCE0FD;
+  text-align: left;
+}
+
+.mytooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.mytooltip .mytooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.mytooltip:hover .mytooltiptext {
+  visibility: visible;
+}
+
+/*# sourceMappingURL=styles.css.map */
