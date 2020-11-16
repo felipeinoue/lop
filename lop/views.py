@@ -8,7 +8,13 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import *
 
 def index(request):
+    # check method
+    if request.method == 'GET':
 
+        # if user not authenticated render login.html
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("login"))
+        
     return render(request, "lop/index.html")
 
 
@@ -46,20 +52,27 @@ def register(request):
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
-            return render(request, "mail/register.html", {
+            return render(request, "lop/register.html", {
                 "message": "Passwords must match."
             })
+
+        # check if email is already taken
+        try:
+            user = User.objects.get(email=email)
+            return render(request, "lop/register.html", {
+                "message": "Email address already taken."
+            })
+        except:
+            pass
 
         # Attempt to create new user
         try:
             user = User.objects.create_user(email, email, password)
-            user.username = username
+            user.lop_username = username
             user.save()
-        except IntegrityError as e:
-            print(e)
-            return render(request, "lop/register.html", {
-                "message": "Email address already taken."
-            })
+        except:
+            return JsonResponse({"error": "There was a problem creating your account, contact the administrator."}, status=404)
+
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:

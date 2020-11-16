@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 
 class User(AbstractUser):
-    pass
+    lop_username = models.CharField(max_length=50)
 
 
 class Dateformat(models.Model):
@@ -63,14 +63,13 @@ class Item(models.Model):
 
 
 def user_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    # file will be uploaded to MEDIA_ROOT/project_<project_id>/<filename>
     return 'project_{0}/{1}'.format(instance.item.project.id, filename)
 
 
 class Archive(models.Model):
     item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name="item_archive", null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="user_archive", null=True)
-    # upload = models.FileField(upload_to=f"uploads/{self.item.project.id}/", null=True)
     upload = models.FileField(upload_to=user_directory_path)
 
     def __str__(self):
