@@ -1,0 +1,20 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}List of open points{% endblock %}</title>
+        <link href="{% static 'lop/styles.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        {% block script %}
+        {% endblock %}
+    </head>
+    <body>
+
+        <!-- body -->
+
+        {% block body %}
+        {% endblock %}
+
+    </body>
+</html>
