@@ -12,10 +12,10 @@ class Dateformat(models.Model):
 
 
 class Project(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="user_project")
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="user_project", null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100, null=True)
-    dateformat = models.ForeignKey(Dateformat, on_delete=models.SET_NULL, related_name="dateformat_project")
+    dateformat = models.ForeignKey(Dateformat, on_delete=models.SET_NULL, related_name="dateformat_project", null=True)
     inactive = models.BooleanField(default=False)
 
 
@@ -26,7 +26,7 @@ class Role(models.Model):
 class Members(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="project_members")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_members")
-    role = models.ForeignKey(Role, on_delete=models.SET_NULL, related_name="role_members")
+    role = models.ForeignKey(Role, on_delete=models.SET_NULL, related_name="role_members", null=True)
 
 
 class Tag(models.Model):
@@ -35,9 +35,9 @@ class Tag(models.Model):
 
 
 class Item(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.SET_NULL, related_name="project_item")
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="user_item")
-    tag = models.ForeignKey(Tag, on_delete=models.SET_NULL, related_name="tag_item")
+    project = models.ForeignKey(Project, on_delete=models.SET_NULL, related_name="project_item", null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="user_item", null=True)
+    tag = models.ForeignKey(Tag, on_delete=models.SET_NULL, related_name="tag_item", null=True)
     description = models.CharField(max_length=1000, null=True)
     dateopened = models.DateTimeField(auto_now_add=True)
     dateclosed = models.DateTimeField(auto_now_add=False)
@@ -45,20 +45,20 @@ class Item(models.Model):
 
 
 class Archive(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name="item_archive")
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="user_archive")
+    item = models.ForeignKey(Item, on_delete=models.SET_NULL, related_name="item_archive", null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="user_archive", null=True)
     upload = models.FileField(upload_to='uploads/', null=True)
 
 
 class Duedate(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="item_duedate")
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="user_duedate")
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="user_duedate", null=True)
     duedate = models.DateTimeField(auto_now_add=False)
 
 
 class Comment(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="item_comment")
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="user_comment")
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="user_comment", null=True)
     comment = models.CharField(max_length=1000, null=True)
 
 
