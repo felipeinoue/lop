@@ -140,3 +140,98 @@ def api_lops(request):
     # Method invalid
     else:
         return JsonResponse({"error": "Invalid method."}, status=400)
+
+
+def api_lop_details(request, project_id):
+
+    # check method
+    if request.method == 'GET':
+        
+        # get project
+        try:
+            project = Project.objects.get(pk=project_id)
+        except:
+            return JsonResponse({"error": "Project not found."}, status=404)
+
+        # create dictionary with all data
+        dictionary = {
+            'project':project.project
+        }
+
+        # return json
+        return JsonResponse(dictionary, safe=False, status=200)
+
+
+    # Method invalid
+    else:
+        return JsonResponse({"error": "Invalid method."}, status=400)
+
+
+def api_members_add(request):
+
+    # Check if method POST
+    if request.method == "POST":
+
+        # start variables
+        data = json.loads(request.body)
+        project_id = data.get('project_id')
+        emails = data.get('emails')
+
+        # separate valid and invalid emails
+        emails_valid = []
+        emails_invalid = []
+        for email in emails:
+
+            # check if email exists in database
+            try:
+                user = User.objects.get(email=email)
+            except:
+                emails_invalid.append(email)
+                continue
+
+            # check if email is already added to the members of this project
+            try:
+                member = Member.objects.get(user=user, project_id=project_id)
+                emails_invalid.append(email)
+                continue
+            except:
+                pass
+
+            # append to valid emails
+            emails_valid.append(email)
+
+        # attempt add valid emails to members
+        emails_added = []
+        for email_valid in emails_valid:
+
+            # get user
+            try:
+                user = User.objects.get(email=email_valid)
+            except:
+                emails_invalid.append(email_valid)
+                continue
+
+            # add to the project members
+            try:
+                member = Member(
+                    project_id=project_id,
+                    user=user,
+                    role_id=4 # default 4 (viewer)
+                )
+                member.save()
+                emails_added.append(email_valid)
+            except:
+                emails_invalid.append(email_valid)
+
+
+        # create list with all data
+        dictionary = {
+            'emails_added':emails_added,
+            'emails_invalid':emails_invalid
+        }
+
+        return JsonResponse(dictionary, safe=False, status=200)
+
+    # Method invalid
+    else:
+        return JsonResponse({"error": "Invalid method."}, status=400)

@@ -13,6 +13,7 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     # APIs
-    path("api_lops", views.api_lops, name="api_lops")
-
+    path("api_lops", views.api_lops, name="api_lops"),
+    path("api_lop_details/<int:project_id>", views.api_lop_details, name="api_lop_details"),
+    path("api_members_add", views.api_members_add, name="api_members_add")
 ]

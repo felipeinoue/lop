@@ -37,83 +37,112 @@
 
         <!-- create new lop -->
         <a href="#" onclick="lop_new_toggle()">New</a>
-        <div id="lop_new">
+        <div id="lop_new" style="display: none;">
             <input type="text" id="lop_newname" name="lop_newname">        
             <input type="submit" value="Create Lop" onclick="lop_new()">        
         </div>
 
     </div>
 </nav>
-  
-  
+
 <!-- Overlay effect when opening sidebar on small screens -->
 <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
-<!-- !PAGE CONTENT! -->
+<!-- !CONTENT VIEW! -->
 <div class="w3-main" style="margin-left:300px;margin-top:43px;">
 
-<!-- Header -->
-<header class="w3-container" style="padding-top:22px">
+<!-- startscreen view -->
+<div id="startscreen_view">
 
-    <!-- lop list name -->
-    <p id="lop_list_name"></p>
-
-
-    <h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
-</header>
-
-<div class="w3-row-padding w3-margin-bottom">
-    <div class="w3-quarter">
-        <div class="w3-container w3-red w3-padding-16">
-            <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
-            <div class="w3-right">
-               <h3>52</h3>
-            </div>
-            <div class="w3-clear"></div>
-            <h4>Messages</h4>
-        </div>
-    </div>
-    <div class="w3-quarter">
-        <div class="w3-container w3-blue w3-padding-16">
-            <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
-            <div class="w3-right">
-               <h3>99</h3>
-            </div>
-            <div class="w3-clear"></div>
-            <h4>Views</h4>
-        </div>
-    </div>
-    <div class="w3-quarter">
-        <div class="w3-container w3-teal w3-padding-16">
-            <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
-            <div class="w3-right">
-               <h3>23</h3>
-            </div>
-            <div class="w3-clear"></div>
-            <h4>Shares</h4>
-        </div>
-    </div>
-    <div class="w3-quarter">
-        <div class="w3-container w3-orange w3-text-white w3-padding-16">
-            <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
-            <div class="w3-right">
-                <h3>50</h3>
-            </div>
-            <div class="w3-clear"></div>
-            <h4>Users</h4>
-        </div>
-    </div>
+    <span>no list selected, use the menu</span>
+    
+<!-- end startscreen view -->
 </div>
-  
-  
+    
+<!-- project view -->
+<div id="project_view" style="display: none;">
+
+    <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+        <span id="header_project_name"></span>
+        <a href="#members" onclick="load_members()">Members: </a>
+    </header>
+
+    <!-- panels -->
+    <div class="w3-row-padding w3-margin-bottom">
+        <div class="w3-quarter">
+            <div class="w3-container w3-red w3-padding-16">
+                <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
+                <div class="w3-right">
+                <h3>52</h3>
+                </div>
+                <div class="w3-clear"></div>
+                <h4>Messages</h4>
+            </div>
+        </div>
+        <div class="w3-quarter">
+            <div class="w3-container w3-blue w3-padding-16">
+                <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
+                <div class="w3-right">
+                <h3>99</h3>
+                </div>
+                <div class="w3-clear"></div>
+                <h4>Views</h4>
+            </div>
+        </div>
+        <div class="w3-quarter">
+            <div class="w3-container w3-teal w3-padding-16">
+                <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
+                <div class="w3-right">
+                <h3>23</h3>
+                </div>
+                <div class="w3-clear"></div>
+                <h4>Shares</h4>
+            </div>
+        </div>
+        <div class="w3-quarter">
+            <div class="w3-container w3-orange w3-text-white w3-padding-16">
+                <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
+                <div class="w3-right">
+                    <h3>50</h3>
+                </div>
+                <div class="w3-clear"></div>
+                <h4>Users</h4>
+            </div>
+        </div>
+    <!-- end panels -->
+    </div>
+
     <!-- Footer -->
     <footer class="w3-container w3-padding-16 w3-light-grey">
-      <h4>FOOTER</h4>
-      <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-    </footer>
-  
-    <!-- End page content -->
+        <h4>FOOTER</h4>
+        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+    </footer>    
+
+<!-- end project view -->
 </div>
+
+<!-- members views -->
+<div id="members_view" style="display: none;">
+
+    <a href="#project" onclick="load_view('project_view')">back</a>
+    <h1>Members</h1>
+
+    <div>
+        <p>Enter list of emails. *each line is a member</p>
+        <textarea name="" id="members_textarea" cols="30" rows="10"></textarea>
+        <input type="submit" value="add" onclick="members_add()">
+    </div>
+    
+
+<!-- end members view -->
+</div>
+
+<!-- End page content -->
+</div>
+
+    
+
 
 {% endblock %}
 
