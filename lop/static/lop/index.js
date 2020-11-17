@@ -176,7 +176,7 @@ function members_add() {
         alert(`added emails: ${result['emails_added']}\ninvalid emails: ${result['emails_invalid']}`)
 
         // // clean up input text
-        // document.getElementById('lop_newname').value = '';
+        document.getElementById('members_textarea').value = '';
 
         // // reload lop lists
         // load_lop_lists();
