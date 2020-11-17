@@ -32,10 +32,10 @@ class Role(models.Model):
         return f"{self.id} | {self.role}"
 
 
-class Members(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="project_members")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_members")
-    role = models.ForeignKey(Role, on_delete=models.SET_NULL, related_name="role_members", null=True)
+class Member(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="project_member")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_member")
+    role = models.ForeignKey(Role, on_delete=models.SET_NULL, related_name="role_member", null=True)
 
     def __str__(self):
         return f"{self.id} | {self.user} | {self.role}"

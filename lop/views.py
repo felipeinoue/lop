@@ -106,21 +106,36 @@ def api_lops(request):
                 dateformat_id=1, #default dateformat DD/MM/YYYY 
                 user_id=request.user.id)
             project.save()
-            return JsonResponse({"message": "Project succesfully created."}, status=201)
         except:
             return JsonResponse({"error": "There was an error creating your project."}, status=400)
 
         # associate user as owner of the project
         try:
-            pass
-        except expression as identifier:
-            pass
-
-
+            member = Member(
+                project=project,
+                user_id=request.user.id,
+                role_id=1 #1 = owner
+            )
+            member.save()
+            return JsonResponse({"message": "Project succesfully created."}, status=201)
+        except:
+            return JsonResponse({"error": "There was an associating your user to the project."}, status=400)
 
     # check if method GET
     if request.method == 'GET':
-        pass
+        lop_lists = Member.objects.filter(user_id=request.user.id)
+
+        # create list with all data
+        ls = []
+        for lop_list in lop_lists:
+            ls.append(
+                {
+                    'project':lop_list.project.project,
+                    'project_id':lop_list.project.id
+                }
+            )
+
+        return JsonResponse(ls, safe=False, status=200)
 
     # Method invalid
     else:
