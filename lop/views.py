@@ -1,3 +1,4 @@
+import json
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, StreamingHttpResponse, HttpResponseNotFound
 from django.shortcuts import render
@@ -84,7 +85,7 @@ def register(request):
 
 def api_lops(request):
 
-    # Check request
+    # Check if method POST
     if request.method == "POST":
 
         # start variables
@@ -100,11 +101,26 @@ def api_lops(request):
 
         # attempt to create new project
         try:
-            project = Project(project=project_name)
+            project = Project(
+                project=project_name, 
+                dateformat_id=1, #default dateformat DD/MM/YYYY 
+                user_id=request.user.id)
             project.save()
             return JsonResponse({"message": "Project succesfully created."}, status=201)
         except:
             return JsonResponse({"error": "There was an error creating your project."}, status=400)
+
+        # associate user as owner of the project
+        try:
+            pass
+        except expression as identifier:
+            pass
+
+
+
+    # check if method GET
+    if request.method == 'GET':
+        pass
 
     # Method invalid
     else:

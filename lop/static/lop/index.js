@@ -22,7 +22,7 @@ function lop_new() {
     const project = $('#lop_newname').val();
     
     // fetch url
-    fetch(`/api_user`, {
+    fetch(`/api_lops`, {
         method: 'POST',
         mode: 'same-origin',  // Do not send CSRF token to another domain.
         headers: {
@@ -39,9 +39,15 @@ function lop_new() {
         console.log(result);
 
         if (result.error) {
+
             alert(result.error);            
+
         } else if (result.message) {
+
             alert(result.message);
+
+            // clean up input text
+            document.getElementById('lop_newname').value = '';
         }
     }) 
 }
