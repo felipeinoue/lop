@@ -125,23 +125,36 @@
 <!-- members views -->
 <div id="members_view" style="display: none;">
 
+    <!-- header -->
     <a href="#project" onclick="load_view('project_view')">back</a>
     <h1>Members</h1>
 
+    <!-- table -->
+    <table style="border-collapse: collapse;">
+        <tr>
+            <th style="border: 1px solid;">Username</th>
+            <th style="border: 1px solid;">Email</th>
+            <th style="border: 1px solid;">Role</th>
+            <th style="border: 1px solid;">Weekly email</th>
+        </tr>
+        <tbody id="members_table_body"></tbody>
+    </table>
+
+    <!-- add member -->
     <div>
         <p>Enter list of emails. *each line is a member</p>
         <textarea name="" id="members_textarea" cols="30" rows="10"></textarea>
         <input type="submit" value="add" onclick="members_add()">
     </div>
     
-
 <!-- end members view -->
 </div>
 
 <!-- End page content -->
 </div>
 
-    
+<!-- The Modal -->
+<div id="myModal" class="modal"></div>
 
 
 {% endblock %}

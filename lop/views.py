@@ -235,3 +235,100 @@ def api_members_add(request):
     # Method invalid
     else:
         return JsonResponse({"error": "Invalid method."}, status=400)
+
+
+def api_members_table(request, project_id):
+
+    # check if method GET
+    if request.method == 'GET':
+
+        # get all members of the requested project
+        try:
+            members = Member.objects.filter(project_id=project_id)
+        except:
+            return JsonResponse({"error": "Project not found."}, status=404)
+
+        # create list with all data
+        ls = []
+        for member in members:
+            ls.append(
+                {
+                    'user_id':member.user.id,
+                    'username':member.user.lop_username,
+                    'email':member.user.email,
+                    'role_id':member.role.id,
+                    'role':member.role.role,
+                    'weeklyemail':member.weeklyemail
+                }
+            )
+
+        return JsonResponse(ls, safe=False, status=200)
+
+    # Check if method POST
+    if request.method == "POST":
+
+        # start variables
+        data = json.loads(request.body)
+        user_id = data.get('user_id')
+
+        # get user
+        try:
+            member = Member.objects.get(project_id=project_id, user_id=user_id)
+        except:
+            return JsonResponse({"error": "User not found."}, status=404)
+
+        # check if data contain role
+        try:
+            role_id = int(data.get('role_id'))
+            member.role_id = role_id
+            member.save()
+        except:
+            pass
+
+        # check if data contain weeklyemail
+        try:
+            member.weeklyemail = data.get('weeklyemail')
+            member.save()
+        except:
+            pass
+
+        # create disctionary with all data
+        dictionary = {
+            'user_id':member.user.id,
+            'username':member.user.lop_username,
+            'email':member.user.email,
+            'role_id':member.role.id,
+            'role':member.role.role,
+            'weeklyemail':member.weeklyemail
+        }
+
+        # return json
+        return JsonResponse(dictionary, safe=False, status=200)
+
+    # Method invalid
+    else:
+        return JsonResponse({"error": "Invalid method."}, status=400)
+
+
+def api_roles(request):
+
+    # check if method GET
+    if request.method == 'GET':
+
+        # get roles
+        try:
+            roles = Role.objects.all()
+        except:
+            return JsonResponse({"error": "There was an error retrieving the roles."}, status=400)
+
+        # create list with all data
+        dictionary = {}
+        for role in roles:
+            dictionary[f'{role.id}'] = f'{role.role}'
+
+        # return json
+        return JsonResponse(dictionary, safe=False, status=200)
+
+    # Method invalid
+    else:
+        return JsonResponse({"error": "Invalid method."}, status=400)

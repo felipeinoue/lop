@@ -1,6 +1,7 @@
 
 // start variables
 let Fproject_id = 0;
+let Frole_dict = [];
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -10,8 +11,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // load lop lists
     load_lop_lists();
+    load_roles();
 
 });
+
+
+function load_roles() {
+    // start variables
+
+    // fetch
+    fetch(`/api_roles`)
+    .then(response => response.json())
+    .then(result => {
+
+        // get all roles and transfer to global variable
+        Frole_dict = result;
+
+    })   
+}
+
 
 function load_lop_lists() {
     // start variables
@@ -141,6 +159,9 @@ function load_members() {
     // prepare page
     document.getElementById('members_textarea').value = '';
 
+    // load members table
+    load_members_table()
+
     // load view
     load_view('members_view');
 
@@ -180,5 +201,186 @@ function members_add() {
 
         // // reload lop lists
         // load_lop_lists();
+    }) 
+}
+
+
+function load_members_table() {
+    // start variables
+
+    // fetch
+    fetch(`/api_members_table/${Fproject_id}`)
+    .then(response => response.json())
+    .then(result => {
+
+        // clean up table body
+        $("#members_table_body").empty();
+
+        result.forEach(members => {
+
+            // create elements
+
+            // row
+            const tr = document.createElement('tr');
+            tr.id = `${members.user_id}`
+
+            // username
+            const td_username = document.createElement('td');
+            td_username.style.border = '1px solid';
+            td_username.innerHTML = `${members.username}`;
+
+            // email
+            const td_email = document.createElement('td');
+            td_email.style.border = '1px solid';
+            td_email.innerHTML = `${members.email}`;
+
+            // role
+            const td_role = document.createElement('td');
+            td_role.style.border = '1px solid';
+
+                // select
+                const role_select = document.createElement('select');
+                role_select.id = `${members.user_id}_members_role_select`
+                role_select.setAttribute('onchange', 'members_role_update(event)')
+
+                // append
+                td_role.append(role_select);
+
+                // option
+                for (let index = 1; index < (Object.keys(Frole_dict).length + 1); index++) {
+                    const role_option = document.createElement('option');
+                    role_option.value = index;
+                    role_option.innerHTML = Frole_dict[`${index}`];
+                    if (members.role_id === index) {
+                        role_option.setAttribute('selected', 'selected');
+                    }
+
+                    // append
+                    role_select.append(role_option);
+                }
+
+            // weekly email
+            const td_weeklyemail = document.createElement('td');
+            td_weeklyemail.style.border = '1px solid';
+
+                // input
+                const weeklyemail_input = document.createElement('input');
+                weeklyemail_input.id = `${members.user_id}_members_weeklyemail_input`
+                weeklyemail_input.type = 'checkbox';
+                weeklyemail_input.setAttribute('onchange', 'members_weeklyemail_update(event)')
+                if (members.weeklyemail) {
+                    weeklyemail_input.setAttribute('checked', 'checked');
+                }
+
+                // append
+                td_weeklyemail.append(weeklyemail_input);
+
+            // manage
+            const td_manage = document.createElement('td');
+            td_manage.style.border = '1px solid';
+
+                // a
+                const manage_a = document.createElement('a');
+                manage_a.href = '#';
+                manage_a.innerHTML = 'remove';
+
+                // append
+                td_manage.append(manage_a);
+
+            // append to table row
+            tr.append(td_username);
+            tr.append(td_email);
+            tr.append(td_role);
+            tr.append(td_weeklyemail);
+            tr.append(td_manage);
+
+            // append to the page
+            document.getElementById('members_table_body').append(tr);
+
+        });
+    })   
+}
+
+
+function members_role_update(event) {
+
+    // get element that triggered the event
+    const element = event.target;
+
+    // start variables
+    const csrftoken = getCookie('csrftoken');
+    const user_id = element.id.replace('_members_role_select', '');
+    const role_id = element.value;
+    
+    // freeze screen
+    $('#myModal').toggle();
+
+    // fetch url
+    fetch(`/api_members_table/${Fproject_id}`, {
+        method: 'POST',
+        mode: 'same-origin',  // Do not send CSRF token to another domain.
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({
+            user_id: user_id,
+            role_id: role_id
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+
+        // get options from select
+        const options = element.children;
+
+        // update select attribute from role id
+        for (const option of options) {
+            option.setAttribute('selected', '');
+            if (option.value == result['role_id']) {
+                option.setAttribute('selected', 'selected')
+            }
+        }
+
+        // unfreeze screen
+        $('#myModal').toggle();
+
+    }) 
+}
+
+
+function members_weeklyemail_update(event) {
+
+    // get element that triggered the event
+    const element = event.target;
+
+    // start variables
+    const csrftoken = getCookie('csrftoken');
+    const user_id = element.id.replace('_members_weeklyemail_input', '');
+    const weeklyemail = element.checked;
+    
+    // freeze screen
+    $('#myModal').toggle();
+
+    // fetch url
+    fetch(`/api_members_table/${Fproject_id}`, {
+        method: 'POST',
+        mode: 'same-origin',  // Do not send CSRF token to another domain.
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({
+            user_id: user_id,
+            weeklyemail: weeklyemail
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+
+        // update checkbox
+        element.checked = result['weeklyemail'];
+
+        // unfreeze screen
+        $('#myModal').toggle();
+
     }) 
 }

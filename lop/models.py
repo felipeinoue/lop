@@ -36,9 +36,10 @@ class Member(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="project_member")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_member")
     role = models.ForeignKey(Role, on_delete=models.SET_NULL, related_name="role_member", null=True)
+    weeklyemail = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.id} | {self.user} | {self.role}"
+        return f"{self.id} | {self.user} | {self.role} | {self.weeklyemail}"
 
 
 class Tag(models.Model):
