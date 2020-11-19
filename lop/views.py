@@ -244,7 +244,8 @@ def api_members_table(request, project_id):
 
         # get all members of the requested project
         try:
-            members = Member.objects.filter(project_id=project_id)
+            members = Member.objects.filter(project_id=project_id).order_by('user__lop_username')
+
         except:
             return JsonResponse({"error": "Project not found."}, status=404)
 
@@ -276,6 +277,15 @@ def api_members_table(request, project_id):
             member = Member.objects.get(project_id=project_id, user_id=user_id)
         except:
             return JsonResponse({"error": "User not found."}, status=404)
+
+        # check if data contain remove
+        remove = data.get('remove')
+        if remove:
+            try:
+                member.delete()
+                return JsonResponse({"message": "User succesfully removed."}, status=200)
+            except:
+                return JsonResponse({"error": "There was a problem removing this user. Contact the administrator."}, status=400)
 
         # check if data contain role
         try:

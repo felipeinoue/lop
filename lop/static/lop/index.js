@@ -199,8 +199,8 @@ function members_add() {
         // // clean up input text
         document.getElementById('members_textarea').value = '';
 
-        // // reload lop lists
-        // load_lop_lists();
+        // reload members table
+        load_members_table()
     }) 
 }
 
@@ -222,7 +222,7 @@ function load_members_table() {
 
             // row
             const tr = document.createElement('tr');
-            tr.id = `${members.user_id}`
+            tr.id = `${members.user_id}_members_table_row`
 
             // username
             const td_username = document.createElement('td');
@@ -280,12 +280,14 @@ function load_members_table() {
             td_manage.style.border = '1px solid';
 
                 // a
-                const manage_a = document.createElement('a');
-                manage_a.href = '#';
-                manage_a.innerHTML = 'remove';
+                const remove_a = document.createElement('a');
+                remove_a.id = `${members.user_id}_members_remove_a`;
+                remove_a.href = '#';
+                remove_a.setAttribute('onclick', 'members_remove_a(event)')
+                remove_a.innerHTML = 'remove';
 
                 // append
-                td_manage.append(manage_a);
+                td_manage.append(remove_a);
 
             // append to table row
             tr.append(td_username);
@@ -378,6 +380,51 @@ function members_weeklyemail_update(event) {
 
         // update checkbox
         element.checked = result['weeklyemail'];
+
+        // unfreeze screen
+        $('#myModal').toggle();
+
+    }) 
+}
+
+
+function members_remove_a(event) {
+
+    // get element that triggered the event
+    const element = event.target;
+
+    // start variables
+    const csrftoken = getCookie('csrftoken');
+    const user_id = element.id.replace('_members_remove_a', '');
+    
+    // freeze screen
+    $('#myModal').toggle();
+
+    // fetch url
+    fetch(`/api_members_table/${Fproject_id}`, {
+        method: 'POST',
+        mode: 'same-origin',  // Do not send CSRF token to another domain.
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({
+            user_id: user_id,
+            remove: 'remove'
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+
+        // user removed succesfully
+        if (result.message) {
+
+            // remove user row
+            $(`#${user_id}_members_table_row`).remove()
+        } else {
+
+            // user not removed for some reason
+            alert('There was a problem removing this user. Contact the administrator.')
+        }
 
         // unfreeze screen
         $('#myModal').toggle();
