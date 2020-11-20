@@ -19,7 +19,7 @@
     <div class="w3-container w3-row">
         <div>
             <span>Welcome, </span>
-            <a href="#">{{ user.lop_username }}</a>
+            <a href="#" onclick="load_profile()">{{ user.lop_username }}</a>
         </div>
     </div>
 
@@ -148,6 +148,47 @@
     </div>
     
 <!-- end members view -->
+</div>
+
+
+<!-- profile views -->
+<div id="profile_view" style="display: none;">
+
+<h1>Profile</h1>
+
+<div>
+    <div>
+        <label for="profile_username">Username:</label>
+        <input type="text" id="profile_username" value="{{ user.lop_username }}">
+    </div>
+    <input type="button" value="save" onclick="profile_username_save()">
+</div>
+
+<hr>
+
+<div>
+    <div>
+        <label for="profile_username">Email:</label>
+        <input type="text" id="profile_email" value="{{ user.email }}">
+    </div>
+    <input type="button" value="save" onclick="profile_email_save()">
+</div>
+
+<hr>
+
+<div>
+    <div>
+        <label for="profile_username">Password:</label>
+        <input type="password" id="profile_password">
+    </div>
+    <div>
+        <label for="profile_confirmation">Password Confirmation:</label>
+        <input type="password" id="profile_confirmation">
+    </div>
+    <input type="button" value="save" onclick="profile_password_save()">
+</div>
+
+<!-- end profile view -->
 </div>
 
 <!-- End page content -->

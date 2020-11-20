@@ -6,6 +6,12 @@ from django.db import models
 class User(AbstractUser):
     lop_username = models.CharField(max_length=50)
 
+    def serialize(self):
+        return {
+            "user_id": self.id,
+            "username": self.lop_username,
+            "email": self.email,
+        }    
 
 class Dateformat(models.Model):
     dateformat = models.CharField(max_length=50, null=True)

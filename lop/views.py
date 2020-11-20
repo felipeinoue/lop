@@ -342,3 +342,127 @@ def api_roles(request):
     # Method invalid
     else:
         return JsonResponse({"error": "Invalid method."}, status=400)
+
+
+def api_profile_details(request):
+
+    # check method
+    if request.method == 'GET':
+        
+        # get user
+        try:
+            user = User.objects.get(pk=request.user.id)
+        except:
+            return JsonResponse({"error": "User not found."}, status=404)
+
+        # return json
+        return JsonResponse(user.serialize(), safe=False, status=200)
+
+    # Method invalid
+    else:
+        return JsonResponse({"error": "Invalid method."}, status=400)
+
+
+def api_profile_username_save(request):
+
+    # Check if method POST
+    if request.method == "POST":
+
+        # start variables
+        data = json.loads(request.body)
+        username = data.get('username').strip()
+
+        # get user
+        try:
+            user = User.objects.get(pk=request.user.id)
+        except:
+            return JsonResponse({"error": "User not found."}, status=404)
+
+        # attempt to update username
+        if username != '':
+            user.lop_username = username
+        else:
+            return JsonResponse({"error": "Username should not be empty."}, status=400)
+
+        # save updated data
+        try:
+            user.save()
+            login(request, user)
+            return JsonResponse({"message": "Username succesfully updated."}, status=200)
+        except:
+            return JsonResponse({"error": "There was a problem updating username."}, status=400)
+
+    # Method invalid
+    else:
+        return JsonResponse({"error": "Invalid method."}, status=400)
+
+
+def api_profile_email_save(request):
+
+    # Check if method POST
+    if request.method == "POST":
+
+        # start variables
+        data = json.loads(request.body)
+        email = data.get('email').strip()
+
+        # get user
+        try:
+            user = User.objects.get(pk=request.user.id)
+        except:
+            return JsonResponse({"error": "User not found."}, status=404)
+
+        # attempt to update username
+        if email != '':
+            user.email = email
+            user.username = email
+        else:
+            return JsonResponse({"error": "Email should not be empty."}, status=400)
+
+        # save updated data
+        try:
+            user.save()
+            login(request, user)
+            return JsonResponse({"message": "Email succesfully updated."}, status=200)
+        except:
+            return JsonResponse({"error": "There was a problem updating email."}, status=400)
+
+    # Method invalid
+    else:
+        return JsonResponse({"error": "Invalid method."}, status=400)
+
+
+def api_profile_password_save(request):
+
+    # Check if method POST
+    if request.method == "POST":
+
+        # start variables
+        data = json.loads(request.body)
+        password = data.get('password').strip()
+        confirmation = data.get('confirmation')
+
+        # get user
+        try:
+            user = User.objects.get(pk=request.user.id)
+        except:
+            return JsonResponse({"error": "User not found."}, status=404)
+
+        # Ensure password matches confirmation
+        if password != '':
+            if password != confirmation:
+                return JsonResponse({"error": "Password must match."}, status=400)
+
+            # attempt to update password
+            else:
+                try:
+                    user.set_password(password)
+                    user.save()
+                    login(request, user)
+                    return JsonResponse({"message": "Password succesfully updated."}, status=200)
+                except:
+                    return JsonResponse({"error": "There was a problem updating the password."}, status=400)
+
+    # Method invalid
+    else:
+        return JsonResponse({"error": "Invalid method."}, status=400)

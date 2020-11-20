@@ -2,6 +2,8 @@
 // start variables
 let Fproject_id = 0;
 let Frole_dict = [];
+let Fusername = '';
+let Femail = '';
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -75,15 +77,16 @@ function load_lop_lists() {
 }
 
 
-function load_view(view_id) {
+function load_view(view) {
 
     // hide all views
     document.getElementById('startscreen_view').style.display = 'none';    
     document.getElementById('project_view').style.display = 'none';    
     document.getElementById('members_view').style.display = 'none';    
+    document.getElementById('profile_view').style.display = 'none';    
 
     // show selected view
-    document.getElementById(view_id).style.display = 'block';    
+    document.getElementById(view).style.display = 'block';    
 
 }
 
@@ -429,5 +432,131 @@ function members_remove_a(event) {
         // unfreeze screen
         $('#myModal').toggle();
 
+    }) 
+}
+
+
+function load_profile() {
+
+    load_view('profile_view');
+    
+}
+
+
+function profile_username_save() {
+
+    // start variables
+    const csrftoken = getCookie('csrftoken');
+    const username = document.getElementById('profile_username').value;
+
+    // fetch url
+    fetch(`/api_profile_username_save`, {
+        method: 'POST',
+        mode: 'same-origin',  // Do not send CSRF token to another domain.
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({
+            username: username
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+
+        // Print result
+        console.log(result);
+
+        // display result
+        if (result.error) {
+
+            // error
+            alert(result.error)
+
+        } else if(result.message) {
+          
+            // success, reload page
+            location.reload();
+
+        }
+    }) 
+}
+
+
+function profile_email_save() {
+
+    // start variables
+    const csrftoken = getCookie('csrftoken');
+    const email = document.getElementById('profile_email').value;
+
+    // fetch url
+    fetch(`/api_profile_email_save`, {
+        method: 'POST',
+        mode: 'same-origin',  // Do not send CSRF token to another domain.
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({
+            email: email
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+
+        // Print result
+        console.log(result);
+
+        // display result
+        if (result.error) {
+
+            // error
+            alert(result.error)
+
+        } else if(result.message) {
+          
+            // success, reload page
+            location.reload();
+
+        }
+    }) 
+}
+
+
+function profile_password_save() {
+
+    // start variables
+    const csrftoken = getCookie('csrftoken');
+    const password = document.getElementById('profile_password').value;
+    const confirmation = document.getElementById('profile_confirmation').value;
+
+    // fetch url
+    fetch(`/api_profile_password_save`, {
+        method: 'POST',
+        mode: 'same-origin',  // Do not send CSRF token to another domain.
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({
+            password: password,
+            confirmation: confirmation
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+
+        // Print result
+        console.log(result);
+
+        // display result
+        if (result.error) {
+
+            // error
+            alert(result.error)
+
+        } else if(result.message) {
+          
+            // success, reload page
+            location.reload();
+
+        }
     }) 
 }
